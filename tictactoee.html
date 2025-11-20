@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      body {
+        background-color: rgb(0, 0, 0);
+      }
+      .column-tictac {
+        display: grid;
+        grid-template-columns: auto auto auto;
+        background-color: transparent;
+        padding: 10px;
+        margin-top: -400px;
+        height: 500px;
+        width: 500px;
+        margin-left: auto;
+        margin-right: auto;
+        z-index: 0;
+      }
+      .column-tic,
+      .column-tic1 {
+        border: 5px double rgba(255, 0, 0, 0.8);
+        padding: 20px;
+        font-size: 30px;
+        text-align: center;
+      }
+      h1 {
+        color: #ff0000;
+        text-align: center;
+      }
+      .cercle {
+        height: 70px;
+        width: 70px;
+        border: double white 5px;
+        background-color: transparent;
+        border-radius: 50%;
+        display: none;
+        margin: 0 auto;
+        vertical-align: middle;
+        box-shadow: 0 0 10px 5px blue;
+        opacity: 1;
+        animation: fadeOut 0.1s ease 0s infinite normal forwards;
+      }
+      .tick {
+        height: 70px;
+        width: 70px;
+        border: double white 5px;
+        background-color: transparent;
+        display: none;
+        margin: 0 auto;
+        vertical-align: middle;
+        box-shadow: 0 0 10px 5px rgb(255, 0, 0);
+        transform: rotateZ(45deg);
+        opacity: 0;
+        animation: fadeOut 0.2s ease 0s infinite normal forwards;
+      }
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+      @keyframes fadeOut {
+        from {
+          opacity: 1;
+        }
+        to {
+          opacity: 0.6;
+        }
+      }
+      .play {
+        display: block;
+        padding: 20px;
+        width: 200px;
+        color: red;
+        background-color: transparent;
+        border: double 3px red;
+        font-size: 30px;
+        font-family: sans-serif;
+        margin-top: 200px;
+      }
+      .play:hover {
+        border-color: white;
+        color: white;
+        box-shadow: 0 0 10px 5px rgb(255, 0, 0);
+        text-shadow: 5px 5px 15px red;
+      }
+      .credit {
+        display: block;
+        padding: 20px;
+        width: 200px;
+        color: red;
+        background-color: transparent;
+        border: double 3px red;
+        font-size: 30px;
+        font-family: sans-serif;
+        margin-top: 20px;
+      }
+      .credit a {
+        text-decoration: none;
+        color: red;
+      }
+      .credit:hover {
+        border-color: white;
+        color: white;
+        box-shadow: 0 0 10px 5px rgb(255, 0, 0);
+        text-shadow: 5px 5px 15px red;
+        a {
+          color: white;
+        }
+      }
+      .play,
+      .credit {
+        margin-left: 200px;
+        cursor: pointer;
+      }
+      .column-tic1 {
+        .cercle {
+          display: inline-block;
+        }
+      }
+      .column-tic {
+        .tick {
+          display: inline-block;
+        }
+      }
+      .line {
+        height: 500px;
+        width: 5px;
+        border: double white 5px;
+        box-shadow: 0 0 10px 5px rgb(255, 0, 0);
+        border-bottom: none;
+        border-left: none;
+        border-top: none;
+        transform: rotateZ(135deg);
+        margin-left: 750px;
+        margin-top: -540px;
+        animation: fadeOut 0.1s ease 0s infinite normal forwards;
+      }
+      .difficulty {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        display: none;
+        height: 300px;
+        width: 500px;
+        background-color: rgb(110, 110, 110);
+        color: rgb(0, 0, 0);
+        text-align: center;
+        z-index: 1;
+        font-size: 20px;
+      }
+      .I,
+      .II,
+      .III {
+        background-color: rgb(231, 228, 228);
+        margin-left: 50px;
+        margin-right: 20px;
+        padding: 20px;
+        height: 70px;
+        width: 70px;
+        text-align: center;
+        transform: rotateZ(45deg);
+        vertical-align: middle;
+        font-size: 40px;
+      }
+      .I:hover,
+      .II:hover,
+      .III:hover {
+        background-color: rgb(74, 72, 72);
+        transition: 0.5s;
+        cursor: pointer;
+        color: white;
+      }
+      span {
+        transform: rotateZ(90deg);
+      }
+      .cancel {
+        padding: 20px;
+        font-size: 15px;
+        color: black;
+        background-color: transparent;
+        margin-top: 25px;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Tic-Tac-Toe Game</h1>
+    <audio
+      autoplay
+      id="background-audio"
+      src="Geometry-Dash-Practice-Mode-Stay-Inside-Me-Soundtrack.ogg"
+      type="audio/ogg"
+    ></audio>
+    <audio
+      id="audio"
+      src="GTA-SA-Menu-Sound-Effect-_HD_.ogg"
+      type="audio/ogg"
+    ></audio>
+    <input
+      type="button"
+      class="play"
+      name="play"
+      value="play"
+      onclick="showDifficulty() ; playsoundeffect()"
+    />
+    <button class="credit" onclick="playsoundeffect()">
+      <a
+        href="file:///C:/Users/MSI/OneDrive/Bureau/visiuel/javascript/2%20players.html"
+        >2 Players</a
+      >
+    </button>
+    <button class="credit" onclick="playsoundeffect()">
+      <a
+        href="file:///C:/Users/MSI/OneDrive/Bureau/visiuel/javascript/credit.html"
+        >Crédit</a
+      >
+    </button>
+    <div class="column-tictac">
+      <div class="column-tic1">
+        <div class="cercle"></div>
+        <div class="tick"></div>
+      </div>
+      <div class="column-tic">
+        <div class="cercle"></div>
+        <div class="tick"></div>
+      </div>
+      <div class="column-tic">
+        <div class="cercle"></div>
+        <div class="tick"></div>
+      </div>
+      <div class="column-tic">
+        <div class="cercle"></div>
+        <div class="tick"></div>
+      </div>
+      <div class="column-tic1">
+        <div class="cercle"></div>
+        <div class="tick"></div>
+      </div>
+      <div class="column-tic">
+        <div class="cercle"></div>
+        <div class="tick"></div>
+      </div>
+      <div class="column-tic">
+        <div class="cercle"></div>
+        <div class="tick"></div>
+      </div>
+      <div class="column-tic">
+        <div class="cercle"></div>
+        <div class="tick"></div>
+      </div>
+      <div class="column-tic1">
+        <div class="cercle"></div>
+        <div class="tick"></div>
+      </div>
+    </div>
+    <div class="line"></div>
+    <div class="difficulty">
+      <h2>Choose difficulty</h2>
+      <br /><br />
+      <button class="I" onclick="NotYet()"><span>•</span></button>
+      <button class="II" onclick="NotYet()"><span>••</span></button>
+      <button class="III" onclick="NotYet()"><span>•••</span></button>
+      <button class="cancel" name="cancel" value="cancel" onclick="cancel()">
+        Cancel
+      </button>
+    </div>
+    <script>
+      function showDifficulty() {
+        var difficultyElement = document.querySelector(".difficulty");
+        difficultyElement.style.display = "inline-block";
+      }
+      function NotYet() {
+        window.alert(
+          "The game is under constraction! Thank you for visiting us return later"
+        );
+      }
+      function cancel() {
+        var difficultyElement = document.querySelector(".difficulty");
+        difficultyElement.style.display = "none";
+      }
+      function playsoundeffect() {
+        var soundeffect = document.getElementById("audio");
+        var starttime = 4.13;
+        audio.currentTime = starttime;
+        soundeffect.play();
+      }
+      window.onload = function () {
+        var audio = document.getElementById("background-audio");
+        var playPromise = audio.play();
+
+        if (playPromise !== undefined) {
+          playPromise.catch((error) => {
+            console.log("Autoplay failed: ", error);
+            document.body.addEventListener(
+              "click",
+              () => {
+                audio.play();
+              },
+              { once: true }
+            );
+          });
+        }
+      };
+    </script>
+  </body>
+</html>
