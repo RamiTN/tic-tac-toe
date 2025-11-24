@@ -190,4 +190,6 @@ body {
       .icon{
         margin-top: 60px;
         color: white;
+        display: flex;
+        gap: 40px;
       }
