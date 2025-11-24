@@ -4,7 +4,17 @@
 let board = ["", "", "", "", "", "", "", "", ""];
 let currentPlayer = "X"; // human
 let botPlayer = "O";
-let difficulty = null;
+let difficulty = null; // declare first
+
+// ----------------------
+// GET DIFFICULTY FROM URL
+// ----------------------
+const urlParams = new URLSearchParams(window.location.search);
+const bot = urlParams.get("bot"); // "noob", "medium", or "hard"
+
+if (bot === "noob") difficulty = "easy";
+if (bot === "medium") difficulty = "medium";
+if (bot === "hard") difficulty = "hard";
 
 // ----------------------
 // ELEMENTS
@@ -94,19 +104,3 @@ function playMove(index, player) {
     cells[index].textContent = player;
     cells[index].classList.add("taken");
 }
-
-// ----------------------
-// SELECT DIFFICULTY
-// ----------------------
-document.getElementById("easy").addEventListener("click", () => {
-    difficulty = "easy";
-    cancel();
-});
-document.getElementById("medium").addEventListener("click", () => {
-    difficulty = "medium";
-    cancel();
-});
-document.getElementById("hard").addEventListener("click", () => {
-    difficulty = "hard";
-    cancel();
-});
