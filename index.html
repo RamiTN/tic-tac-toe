@@ -82,9 +82,18 @@
     <div class="difficulty">
       <h2>Choose difficulty</h2>
       <br /><br />
-      <button class="I" onclick="NotYet()"><span>•</span></button>
-      <button class="II" onclick="NotYet()"><span>••</span></button>
-      <button class="III" onclick="NotYet()"><span>•••</span></button>
+<button class="I" onclick="window.location.href='/view/game.html?bot=noob'">
+  <span>•</span>
+</button>
+
+<button class="II" onclick="window.location.href='/view/game.html?bot=medium'">
+  <span>••</span>
+</button>
+
+<button class="III" onclick="window.location.href='/view/game.html?bot=hard'">
+  <span>•••</span>
+</button>
+
       <button class="cancel" name="cancel" value="cancel" onclick="cancel()">
         Cancel
       </button>
