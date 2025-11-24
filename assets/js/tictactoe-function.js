@@ -6,12 +6,6 @@ function showDifficulty() {
     }
 }
 
-// Alert for features under construction
-function NotYet() {
-    window.alert(
-        "The game is under construction! Thank you for visiting us. Please return later."
-    );
-}
 
 // Hide difficulty menu
 function cancel() {
