@@ -4,22 +4,24 @@
 let board = ["", "", "", "", "", "", "", "", ""];
 let currentPlayer = "X"; // human
 let botPlayer = "O";
-let difficulty = null; // declare first
+let difficulty = null;
 
 // ----------------------
 // GET DIFFICULTY FROM URL
 // ----------------------
-const urlParams = new URLSearchParams(window.location.search);
-const bot = urlParams.get("bot"); // "noob", "medium", or "hard"
+(function setDifficultyFromURL() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const bot = urlParams.get("bot"); // "noob", "medium", or "hard"
 
-if (bot === "noob") difficulty = "easy";
-if (bot === "medium") difficulty = "medium";
-if (bot === "hard") difficulty = "hard";
+    if (bot === "noob") difficulty = "easy";
+    else if (bot === "medium") difficulty = "medium";
+    else if (bot === "hard") difficulty = "hard";
+})();
 
 // ----------------------
 // ELEMENTS
 // ----------------------
-const cells = document.querySelectorAll(".cell");
+const cells = document.querySelectorAll(".column-tic");
 
 // ----------------------
 // RESET GAME
@@ -29,9 +31,15 @@ function resetGame() {
     currentPlayer = "X";
 
     cells.forEach(c => {
-        c.textContent = "";
-        c.classList.remove("taken");
+        c.classList.remove("column-tic1");
+        const cercle = c.querySelector(".cercle");
+        const tick = c.querySelector(".tick");
+        if (cercle) cercle.style.display = "none";
+        if (tick) tick.style.display = "none";
     });
+    
+    const line = document.querySelector(".line");
+    if (line) line.style.display = "none";
 }
 
 // ----------------------
@@ -54,6 +62,34 @@ function checkDraw() {
 }
 
 // ----------------------
+// SHOW WIN LINE
+// ----------------------
+function showWinLine() {
+    const line = document.querySelector(".line");
+    if (line) line.style.display = "block";
+}
+
+// ----------------------
+// PLAY MOVE FUNCTION
+// ----------------------
+function playMove(index, player) {
+    board[index] = player;
+    
+    const cell = cells[index];
+    
+    if (player === "X") {
+        // X = tick (croix)
+        const tick = cell.querySelector(".tick");
+        if (tick) tick.style.display = "inline-block";
+    } else {
+        // O = cercle
+        cell.classList.add("column-tic1");
+        const cercle = cell.querySelector(".cercle");
+        if (cercle) cercle.style.display = "inline-block";
+    }
+}
+
+// ----------------------
 // HANDLE USER CLICK
 // ----------------------
 cells.forEach(cell => {
@@ -62,10 +98,15 @@ cells.forEach(cell => {
 
         if (board[index] !== "" || difficulty === null) return;
 
+        // Human move (X)
         playMove(index, "X");
+
         if (checkWin("X")) {
-            alert("You win!");
-            resetGame();
+            showWinLine();
+            setTimeout(() => {
+                alert("You win!");
+                resetGame();
+            }, 500);
             return;
         }
         if (checkDraw()) {
@@ -74,33 +115,28 @@ cells.forEach(cell => {
             return;
         }
 
-        // BOT TURN
+        // BOT move (O)
         setTimeout(() => {
             let botMove;
-
             if (difficulty === "easy") botMove = noobMove(board);
-            if (difficulty === "medium") botMove = mediumMove(board);
-            if (difficulty === "hard") botMove = hardMove(board);
+            else if (difficulty === "medium") botMove = mediumMove(board);
+            else if (difficulty === "hard") botMove = hardMove(board);
 
             playMove(botMove, "O");
 
             if (checkWin("O")) {
-                alert("Bot wins!");
-                resetGame();
+                showWinLine();
+                setTimeout(() => {
+                    alert("Bot wins!");
+                    resetGame();
+                }, 500);
+                return;
             }
             if (checkDraw()) {
                 alert("Draw!");
                 resetGame();
+                return;
             }
         }, 400);
     });
 });
-
-// ----------------------
-// PLAY MOVE FUNCTION
-// ----------------------
-function playMove(index, player) {
-    board[index] = player;
-    cells[index].textContent = player;
-    cells[index].classList.add("taken");
-}

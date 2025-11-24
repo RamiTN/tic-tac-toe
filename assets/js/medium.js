@@ -8,24 +8,34 @@ function mediumMove(board) {
         [0,4,8],[2,4,6]
     ];
 
-    // 1. Can bot win?
+    // 1. Can bot win? Take the winning move
     for (let p of winPatterns) {
         let [a,b,c] = p;
         let line = [board[a], board[b], board[c]];
-        if (line.filter(v => v === bot).length === 2 && line.includes("")) {
-            return p[line.indexOf("")];
+        let botCount = line.filter(v => v === bot).length;
+        let emptyCount = line.filter(v => v === "").length;
+        
+        if (botCount === 2 && emptyCount === 1) {
+            if (board[a] === "") return a;
+            if (board[b] === "") return b;
+            if (board[c] === "") return c;
         }
     }
 
-    // 2. Can player win? block him
+    // 2. Can human win? Block them
     for (let p of winPatterns) {
         let [a,b,c] = p;
         let line = [board[a], board[b], board[c]];
-        if (line.filter(v => v === human).length === 2 && line.includes("")) {
-            return p[line.indexOf("")];
+        let humanCount = line.filter(v => v === human).length;
+        let emptyCount = line.filter(v => v === "").length;
+        
+        if (humanCount === 2 && emptyCount === 1) {
+            if (board[a] === "") return a;
+            if (board[b] === "") return b;
+            if (board[c] === "") return c;
         }
     }
 
-    // 3. Otherwise random
+    // 3. Otherwise random move
     return noobMove(board);
 }
