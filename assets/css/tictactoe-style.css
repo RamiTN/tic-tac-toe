@@ -1,127 +1,174 @@
+/* --------------------- */
+/* GENERAL */
+/* --------------------- */
 body {
-        background-color: rgb(0, 0, 0);
-      }
-      .column-tictac {
-        display: grid;
-        grid-template-columns: auto auto auto;
-        background-color: transparent;
-        padding: 10px;
-        margin-top: -400px;
-        height: 500px;
-        width: 500px;
-        margin-left: auto;
-        margin-right: auto;
-        z-index: 0;
-      }
-      .column-tic,
-      .column-tic1 {
-        border: 5px double rgba(255, 0, 0, 0.8);
-        padding: 20px;
-        font-size: 30px;
-        text-align: center;
-      }
-      h1 {
-        color: #ff0000;
-        text-align: center;
-      }
-      .cercle {
-        height: 70px;
-        width: 70px;
-        border: double white 5px;
-        background-color: transparent;
-        border-radius: 50%;
-        display: none;
-        margin: 0 auto;
-        vertical-align: middle;
-        box-shadow: 0 0 10px 5px blue;
-        opacity: 1;
-        animation: fadeOut 0.1s ease 0s infinite normal forwards;
-      }
-      .tick {
-        height: 70px;
-        width: 70px;
-        border: double white 5px;
-        background-color: transparent;
-        display: none;
-        margin: 0 auto;
-        vertical-align: middle;
-        box-shadow: 0 0 10px 5px rgb(255, 0, 0);
-        transform: rotateZ(45deg);
-        opacity: 0;
-        animation: fadeOut 0.2s ease 0s infinite normal forwards;
-      }
-      @keyframes fadeIn {
-        from {
-          opacity: 0;
-        }
-        to {
-          opacity: 1;
-        }
-      }
-      @keyframes fadeOut {
-        from {
-          opacity: 1;
-        }
-        to {
-          opacity: 0.6;
-        }
-      }
-      .play {
-        display: block;
-        padding: 20px;
-        width: 200px;
-        color: red;
-        background-color: transparent;
-        border: double 3px red;
-        font-size: 30px;
-        font-family: sans-serif;
-        margin-top: 200px;
-      }
-      .play:hover {
-        border-color: white;
-        color: white;
-        box-shadow: 0 0 10px 5px rgb(255, 0, 0);
-        text-shadow: 5px 5px 15px red;
-      }
-      .credit {
-        display: block;
-        padding: 20px;
-        width: 200px;
-        color: red;
-        background-color: transparent;
-        border: double 3px red;
-        font-size: 30px;
-        font-family: sans-serif;
-        margin-top: 20px;
-      }
-      .credit a {
-        text-decoration: none;
-        color: red;
-      }
-      .credit:hover {
-        border-color: white;
-        color: white;
-        box-shadow: 0 0 10px 5px rgb(255, 0, 0);
-        text-shadow: 5px 5px 15px red;
-        a {
-          color: white;
-        }
-      }
-      .play,
-      .credit {
-        margin-left: 200px;
-        cursor: pointer;
-      }
-      .column-tic1 {
-        .cercle {
-          display: inline-block;
-        }
-      }
-      .column-tic {
-        .tick {
-          display: inline-block;
-        }
-      }
+  background-color: #000;
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+h1 {
+  color: red;
+  font-size: clamp(28px, 4vw, 50px);
+  text-align: center;
+  margin: 2vh 0;
+}
+
+/* --------------------- */
+/* GAME BOARD */
+/* --------------------- */
+.column-tictac {
+  position: relative; /* IMPORTANT for the winning line */
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1vmin;
+
+  width: min(90vmin, 500px);
+  aspect-ratio: 1/1;
+
+  margin-top: 2vh;
+  margin-bottom: 2vh;
+}
+
+.column-tic,
+.column-tic1 {
+  border: 0.6vmin double rgba(255, 0, 0, 0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: clamp(20px, 7vmin, 60px);
+  position: relative;
+}
+
+/* --------------------- */
+/* SYMBOLS */
+/* --------------------- */
+.cercle {
+  width: clamp(40px, 12vmin, 80px);
+  height: clamp(40px, 12vmin, 80px);
+  border-radius: 50%;
+  border: clamp(3px, 0.6vmin, 6px) double white;
+  display: none;
+  box-shadow: 0 0 2vmin 1vmin blue;
+  animation: fadeOut 0.1s infinite alternate;
+}
+
+.tick {
+  width: clamp(40px, 12vmin, 80px);
+  height: clamp(40px, 12vmin, 80px);
+  border: clamp(3px, 0.6vmin, 6px) double white;
+  transform: rotateZ(45deg);
+  display: none;
+  box-shadow: 0 0 2vmin 1vmin red;
+  animation: fadeOut 0.2s infinite alternate;
+}
+
+/* --------------------- */
+/* ANIMATIONS */
+/* --------------------- */
+@keyframes fadeOut {
+  from { opacity: 1; }
+  to { opacity: 0.5; }
+}
+
+/* --------------------- */
+/* BUTTONS */
+/* --------------------- */
+.play,
+.credit {
+  width: min(60vw, 250px);
+  padding: 2vh;
+  font-size: clamp(20px, 4vw, 32px);
+  color: red;
+  background: transparent;
+  border: 0.5vmin double red;
+  text-align: center;
+  cursor: pointer;
+  margin: 10px auto;
+  transition: 0.3s;
+}
+
+.play:hover,
+.credit:hover {
+  color: white;
+  border-color: white;
+  box-shadow: 0 0 10px red;
+  text-shadow: 0 0 10px red;
+}
+
+.credit a {
+  color: red;
+  text-decoration: none;
+}
+.credit:hover a {
+  color: white;
+}
+
+/* --------------------- */
+/* DIFFICULTY POP-UP */
+/* --------------------- */
+.difficulty {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  width: min(90vw, 400px);
+  padding: 20px;
+
+  background: rgb(110, 110, 110);
+  display: none;
+  text-align: center;
+  z-index: 10;
+  border-radius: 8px;
+  font-size: clamp(16px, 3vw, 22px);
+}
+
+.I, .II, .III {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: clamp(50px, 12vmin, 80px);
+  height: clamp(50px, 12vmin, 80px);
+
+  margin: 10px;
+  background: rgb(231, 228, 228);
+  transform: rotateZ(45deg);
+  font-size: clamp(22px, 6vmin, 36px);
+  cursor: pointer;
+}
+
+.I:hover, .II:hover, .III:hover {
+  background-color: rgb(74, 72, 72);
+  color: white;
+}
+
+.cancel {
+  padding: 10px;
+  margin-top: 15px;
+  background: transparent;
+  cursor: pointer;
+  font-size: clamp(14px, 3vw, 18px);
+}
+
+/* --------------------- */
+/* FIX SYMBOL VISIBILITY */
+/* --------------------- */
+.column-tic1 .cercle {
+  display: inline-block !important;
+}
+
+.column-tic .tick {
+  display: inline-block !important;
+}
+
+/* --------------------- */
+/* WINNING LINE (DECORATIVE) */
+/* --------------------- */
       .line {
         height: 500px;
         width: 5px;
@@ -131,65 +178,57 @@ body {
         border-left: none;
         border-top: none;
         transform: rotateZ(135deg);
-        margin-left: 750px;
         margin-top: -540px;
         animation: fadeOut 0.1s ease 0s infinite normal forwards;
       }
-      .difficulty {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        display: none;
-        height: 300px;
-        width: 500px;
-        background-color: rgb(110, 110, 110);
-        color: rgb(0, 0, 0);
-        text-align: center;
-        z-index: 1;
-        font-size: 20px;
-      }
-      .I,
-      .II,
-      .III {
-        background-color: rgb(231, 228, 228);
-        margin-left: 50px;
-        margin-right: 20px;
-        padding: 20px;
-        height: 70px;
-        width: 70px;
-        text-align: center;
-        transform: rotateZ(45deg);
-        vertical-align: middle;
-        font-size: 40px;
-      }
-      .I:hover,
-      .II:hover,
-      .III:hover {
-        background-color: rgb(74, 72, 72);
-        transition: 0.5s;
-        cursor: pointer;
-        color: white;
-      }
-      span {
-        transform: rotateZ(90deg);
-      }
-      .cancel {
-        padding: 20px;
-        font-size: 15px;
-        color: black;
-        background-color: transparent;
-        margin-top: 25px;
-        cursor: pointer;
-      }
-      footer{
-        color: white;
-        text-align: center;
-        margin-top: 200px;
-      }
-      .icon{
-        margin-top: 60px;
-        color: white;
-        display: flex;
-        gap: 40px;
-      }
+
+/* --------------------- */
+/* FOOTER */
+/* --------------------- */
+footer {
+  color: white;
+  text-align: center;
+  margin-top: 5vh;
+  font-size: clamp(16px, 3vw, 22px);
+}
+
+.icon {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  color: white;
+  font-size: clamp(20px, 5vw, 35px);
+}
+/* Responsive design*/
+@media (min-width: 380px) and (max-width: 566px) {
+  .line {
+    height: 90vmin;
+    width: 0.8vmin;
+    border-width: 0.8vmin;
+    margin-top: calc(-90vmin - 10vmin);
+  }
+}
+
+@media (max-width: 425px) {
+  .line {
+    height: 90vmin;
+    width: 0.8vmin;
+    border-width: 0.8vmin;
+    margin-top: calc(-90vmin - 10vmin);
+  }
+}
+
+@media (max-width: 375px) {
+  .line {
+    height: 85vmin;
+    margin-top: calc(-85vmin - 8vmin);
+  }
+}
+
+@media (max-width: 320px) {
+  .line {
+    height: 80vmin;
+    margin-top: calc(-80vmin - 6vmin);
+  }
+}
