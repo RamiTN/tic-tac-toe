@@ -48,3 +48,27 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 });
+let deferredPrompt;
+const installBtn = document.getElementById('installPWA');
+
+window.addEventListener('beforeinstallprompt', (e) => {
+    e.preventDefault();
+    deferredPrompt = e;
+
+    // show your button
+    installBtn.style.display = 'block';
+
+    installBtn.addEventListener('click', () => {
+        installBtn.style.display = 'none';
+        deferredPrompt.prompt();
+
+        deferredPrompt.userChoice.then((choice) => {
+            deferredPrompt = null;
+        });
+    });
+});
+
+// optional: hide button after install
+window.addEventListener('appinstalled', () => {
+    installBtn.style.display = 'none';
+});

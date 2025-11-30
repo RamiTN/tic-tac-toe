@@ -1,0 +1,22 @@
+{
+  "name": "Tic Tac Toe",
+  "short_name": "TicTacToe",
+  "description": "A clean and fun Tic Tac Toe game by Mysxi.",
+  "start_url": "index.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#000000",
+  "theme_color": "#6a00ff",
+  "icons": [
+    {
+      "src": "assets/img/icon_x-o.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "assets/img/icon_x-o.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
